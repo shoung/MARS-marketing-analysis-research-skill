@@ -4,7 +4,31 @@
 
 ## 開始使用
 
-將 [marketing-service-innovation](marketing-service-innovation/) 資料夾複製到本機的 Codex Skills 目錄，保留資料夾結構，再以 `$marketing-service-innovation` 搭配公司、情境與提案目標呼叫。流程與交付規格見 [SKILL.md](marketing-service-innovation/SKILL.md)。
+### 安裝到 Codex
+
+在 Codex 對話中貼上這一行：
+
+```text
+$skill-installer 請從 https://github.com/shoung/MARS-marketing-analysis-research-skill/tree/main/marketing-service-innovation 安裝這個 Skill。
+```
+
+也可以在已安裝 Codex CLI 的終端機執行：
+
+```sh
+codex '$skill-installer 請從 https://github.com/shoung/MARS-marketing-analysis-research-skill/tree/main/marketing-service-innovation 安裝這個 Skill。'
+```
+
+安裝完成後開啟新的 Codex 對話。如果技能清單還沒顯示它，重新啟動 Codex。詳見 [Codex Skill 官方文件](https://learn.chatgpt.com/docs/build-skills#install-curated-skills-for-local-use)。
+
+### 呼叫範例
+
+在 Codex 對話中貼上：
+
+```text
+$marketing-service-innovation 請以臺灣 World Gym 為例，提出提升既有會員續約意願的行銷方案。假設先在臺北兩間門市試行 8 週，預算上限新臺幣 30 萬元。依六步流程使用可追溯的公開資料，區分已知事實和待驗證假設，並說明續約率、增量貢獻與擴大試行的門檻。請以繁體中文交付簡報、完整報告與三分鐘講稿。
+```
+
+流程與交付規格見 [SKILL.md](marketing-service-innovation/SKILL.md)。
 
 ## 案例
 
