@@ -1,0 +1,6 @@
+interface:
+  display_name: "行銷服務創新提案"
+  short_description: "以理論、證據與雙專家模擬評審完成企業案例及服務創新行銷作業"
+  default_prompt: "請用 $marketing-service-innovation 協助我的企業服務創新作業，先確認公司、情境與老師要求。"
+policy:
+  allow_implicit_invocation: true

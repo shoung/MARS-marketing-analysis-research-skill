@@ -1,0 +1,20 @@
+const fs=await import('node:fs/promises');
+// Set both fields before running through `ego-browser nodejs`. Reuse one active task space.
+const config={skillDirectory:'/absolute/path/to/marketing-service-innovation',taskSpaceId:null};
+if(!Number.isInteger(config.taskSpaceId)||!config.skillDirectory.startsWith('/')||config.skillDirectory.startsWith('/absolute/'))throw new Error('Set config.skillDirectory and the active config.taskSpaceId before running.');
+const skill=config.skillDirectory;
+const internal=skill+'/internal/nike';
+await fs.mkdir(internal,{recursive:true});
+const ref=skill+'/referance/nike';
+const task=await taskSpace(config.taskSpaceId),page=task.page('p1');
+const {pathToFileURL}=await import('node:url');
+await page.goto(pathToFileURL(ref+'/nike-analysis-report.html').href);
+await page.waitForSelector('#summary');
+const version=await page.cdp('Browser.getVersion');
+const browser=version.product;
+await page.cdp('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
+const facts=await page.evaluate(()=>({title:document.title,width:innerWidth,height:innerHeight,scrollWidth:document.documentElement.scrollWidth,pageHeight:document.documentElement.scrollHeight,h1:document.querySelectorAll('h1').length,resourceLoads:performance.getEntriesByType('resource').map(x=>x.name),brokenAnchors:[...document.querySelectorAll('a[href^="#"]')].filter(a=>!document.getElementById(a.getAttribute('href').slice(1))).map(a=>a.getAttribute('href')),externalDependencies:[...document.querySelectorAll('script[src],link[rel="stylesheet"],img[src]')].map(n=>n.src||n.href),chapters:[...document.querySelectorAll('h2')].map(n=>({id:n.id,text:n.textContent,y:Math.round(n.getBoundingClientRect().top+scrollY)}))}));
+const pdf=await page.cdp('Page.printToPDF',{printBackground:true,preferCSSPageSize:true,displayHeaderFooter:true,headerTemplate:'<div></div>',footerTemplate:'<div style="font-size:8px;width:100%;margin:0 14mm;color:#52645b;display:flex;justify-content:space-between"><span>Nike 如何重回跑者的選擇？</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>'});
+await fs.writeFile(ref+'/nike-analysis-report-print.pdf',Buffer.from(pdf.data,'base64'));
+await fs.writeFile(internal+'/browser-initial.json',JSON.stringify({date:new Date().toISOString(),spaceId:config.taskSpaceId,page:'p1',browser,url:await page.url(),facts},null,2));
+console.log({facts,pdfBytes:Buffer.byteLength(pdf.data,'base64')});
